@@ -92,8 +92,8 @@ def main():
     print("\t 2. Enter your own images")
     choice = int(input("Enter your choice : "))
 
-    img_show = Image.open("images/hider.png")
-    img_hide = Image.open("images/template.jpg")
+    img_show = Image.open("images/usian.jpg")
+    img_hide = Image.open("images/skyline.jpg")
 
     if(choice == 2):
         print("\t\tAdd images in images folder present in this folder")
