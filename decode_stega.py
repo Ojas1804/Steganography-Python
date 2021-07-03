@@ -1,7 +1,6 @@
 from PIL import Image
 import sys
-from PIL import ImageColor
-from steganography import new_image
+from PIL import ImageColor from steganography import new_image
 
 def left_shift(val):
     return val << 4
@@ -11,6 +10,8 @@ def retrieve_image(val):
     val = val % 255
     return(left_shift(val >> 4))
 
+def new_func():
+    print("Hello")
 
 def decode(decoded_img, img):
     for x in range(img.width):
