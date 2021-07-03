@@ -1,6 +1,7 @@
 from PIL import Image
 import sys
-from PIL import ImageColor from steganography import new_image
+from PIL import ImageColor 
+from steganography import new_image
 
 def left_shift(val):
     return val << 4
