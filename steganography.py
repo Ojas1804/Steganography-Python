@@ -37,7 +37,6 @@ class Steganography:
         return img
 
 
-<<<<<<< HEAD
     def merge_image_text(self, stega_img, img_show, text):
         print(stega_img.height)
         print(stega_img.width)
@@ -62,7 +61,6 @@ class Steganography:
                 else:
                     stega_img.putpixel((i, j), rgba_show)
         return stega_img
-=======
 
 def main():
     print("\t\tTHIS ALGORITHM DOESN'T WORK PROPERLY WITH DARK IMAGES WHILE DECODING THE IMAGE...\n")
@@ -97,7 +95,6 @@ def main():
                 print("File format not accepted...")
             else:
                 break
->>>>>>> 15728ab32ebb0a8431e61961fc425b412710cb89
 
 
     def merge_image(self, stega_img, img_show, img_hide):
