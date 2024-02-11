@@ -37,6 +37,7 @@ class Steganography:
         return img
 
 
+<<<<<<< HEAD
     def merge_image_text(self, stega_img, img_show, text):
         print(stega_img.height)
         print(stega_img.width)
@@ -61,6 +62,42 @@ class Steganography:
                 else:
                     stega_img.putpixel((i, j), rgba_show)
         return stega_img
+=======
+
+def main():
+    print("\t\tTHIS ALGORITHM DOESN'T WORK PROPERLY WITH DARK IMAGES WHILE DECODING THE IMAGE...\n")
+
+    print("Do you want to: ")
+    print("\t 1. See the demo with already present images")
+    print("\t 2. Enter your own images")
+    choice = int(input("Enter your choice : "))
+
+    img_show = Image.open("images/usian.jpg")
+    img_hide = Image.open("images/skyline.jpg")
+
+    if(choice == 2):
+        print("\t\tAdd images in images folder present in this folder")
+        img1 = print("Enter image name with extension that you want to hide (only jpg and png accepted): ")
+        img1 = input()
+
+        accepted_ext = ("jpg", "png", "jpeg")
+
+        while(True):
+            if(img1.split(".")[1] not in accepted_ext):
+                print("File format not accepted...")
+            else:
+                break
+
+        img2 = print("Enter image name with extension that you want to show : ")
+        img2 = input()
+
+             
+        while(True):
+            if(img1.split(".")[1] not in accepted_ext):
+                print("File format not accepted...")
+            else:
+                break
+>>>>>>> 15728ab32ebb0a8431e61961fc425b412710cb89
 
 
     def merge_image(self, stega_img, img_show, img_hide):
