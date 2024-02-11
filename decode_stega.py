@@ -1,59 +1,57 @@
-from PIL import Image
-import sys
-from PIL import ImageColor 
-from steganography import new_image
+class Decoder:
+    def left_shift(self, val):
+        return val << 4
 
-def left_shift(val):
-    return val << 4
+    def retrieve_image(self, val):
+        val = val << 4
+        val = val % 255
+        return(self.left_shift(val >> 4))
 
-def retrieve_image(val):
-    val = val << 4
-    val = val % 255
-    return(left_shift(val >> 4))
-
-def new_func():
-    print("Hello")
-
-def decode(decoded_img, img):
-    for x in range(img.width):
-        for y in range(img.height):
-           rbg = img.getpixel((x, y))
-           red = retrieve_image(rbg[0])
-           green = retrieve_image(rbg[1])
-           blue = retrieve_image(rbg[2])
-           decoded_img.putpixel((x, y), (red, green, blue))
-
-    return decoded_img
+    def retrieve_text(self, val, color):
+        binary = bin(val)[2:]
+        if color=='r':
+            return binary[-3:]
+        if color=='g':
+            return binary[-3:]
+        return binary[-2:]
 
 
-def main():
-    print("Do you want to : ")
-    print("\t 1. decode an already present image")
-    print("\t 2. decode your own image")
-    choice = int(input("Enter your choice : "))
+    def decode_image(self, decoded_img, img):
+        for x in range(img.size[0]):
+            for y in range(img.size[1]):
+                rbg = img.getpixel((x, y))
+                red = self.retrieve_image(rbg[0])
+                green = self.retrieve_image(rbg[1])
+                blue = self.retrieve_image(rbg[2])
+                decoded_img.putpixel((x, y), (red, green, blue))
+        return decoded_img
 
-    img = Image.open("stegaImage.png")
- 
-    if(choice == 2):
-        print("\t\tAdd images in images folder present in this folder")
-        img1 = print("Enter image name with extension that you want to hide (only jpg and png accepted): ")
-        img1 = input()
 
-        accepted_ext = ("jpg", "png", "jpeg")
-
-        while(True):
-            if(img1.split(".")[1] not in accepted_ext):
-                print("File format not accepted...")
-            else:
-                break
-
-        img = Image.open(f"images/{img1}")
-    
-    if(img == None):
-        print("Image not found in the location")
-        sys.exit()
-
-    decoded_img = new_image(img.width, img.height)
-    decoded_img = decode(decoded_img, img)
-    decoded_img.save("decodedImg.png")
-    print("\n\t\tDECODED IMAGE HAS BEEN SAVED BY NAME 'decodedImg.png' \n\n")
+    def decode_text(self, img):
+        first_colon = False
+        text_len = -1
+        decoded_string = ""
+        text_len_string = ""
+        i = 0
+        for x in range(img.size[0]):
+            for y in range(img.size[1]):
+                rbg = img.getpixel((x, y))
+                red = str(self.retrieve_text(rbg[0], 'r'))
+                green = str(self.retrieve_text(rbg[1], 'g'))
+                blue = str(self.retrieve_text(rbg[2], 'b'))
+                ascii_val = red+green+blue
+                ascii_val = int(ascii_val, 2)
+                if not first_colon:
+                    if chr(ascii_val) == ':':
+                        text_len = int(text_len_string)
+                        first_colon = True
+                        print(f"text length: {text_len}")
+                    else:
+                        text_len_string += chr(ascii_val)
+                else:
+                    if i < text_len:
+                        decoded_string += chr(ascii_val)
+                        i+=1
+                    else:
+                        return decoded_string
+        return None
